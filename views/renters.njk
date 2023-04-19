@@ -1,0 +1,191 @@
+{% extends 'layouts/main-layout.njk' %}
+
+{% block title %}
+	Renters
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+	<div class="row g-4">
+		<div class="col-sm-12 col-xl-4">
+			<div class="bg-light rounded h-100 p-4">
+				{% include 'components/messages.njk' %}
+				{% if qParams.is_edit == 'true' %}
+					<h6 class="mb-4">Edit Renters</h6>
+
+					<form action="/edit-renter/{{renter.id}}" method="POST">
+						
+						<div class="mb-3">
+							<label for="Fname" class="form-label" >Machine_name</label>
+							<input type="text" class="form-control" value="{{renter.Fname}}" name="Fname" id="FnameId"
+								aria-describedby="emailHelp">
+						</div>
+
+						<div class="mb-3">
+							<label for="Lname" class="form-label" >Description </label>
+							<input type="text" class="form-control"  value="{{ renter.Lname}}" name="Lname" id="LnameId"
+								aria-describedby="emailHelp">
+						</div>	
+						<div class="mb-3">
+							<label for="phonenumber" class="form-label">Price</label>
+							<input type="phone" class="form-control" value="{{renter.phonenumber}}" name="phonenumber" id="phonenumberId">
+						</div>
+
+							{# <div class="mb-3">
+							<label for="email" class="form-label">Email</label>
+							<input type="text" class="form-control" value="{{renter.email}}" name="email" id="emailId">
+						</div> #}
+						{# <div class="mb-3">
+							<label for="designation" class="form-label">Designation</label>
+							<input type="text" class="form-control"value="{{renter.designation}}" name="designation" id="designationId">
+						</div> #}
+						<div class="mb-3">
+							<label for="city" class="form-label">City</label>
+							<input type="text" class="form-control" value="{{renter.city}}"name="city" id="cityId">
+						</div>
+						<div class="mb-3">
+							<label for="state" class="form-label">State</label>
+							<input type="text" class="form-control"value="{{renter.state}}" name="state" id="stateId">
+						</div>
+						<div class="mb-3">
+							<label for="profile_image" class="form-label">Profile Image</label>
+							<input type="file" class="form-control"value="{{renter.profile_image}}" name="profile_image" id="profileImageId"
+								aria-describedby="profileImage">
+						</div>
+						<div class="mb-3 form-check">
+							{% if renter.is_active == 1 %}
+								<input type="checkbox" class="form-check-input" checked name="is_active" id="exampleCheck1">
+							{% else %}
+								<input type="checkbox" class="form-check-input" name="is_active" id="exampleCheck1">
+							{% endif %}
+							<label class="form-check-label" for="exampleCheck1">Is Active</label>
+						</div>
+						<button type="submit" class="btn btn-primary">Update</button>
+						<a href="/renters" type="submit" class="btn btn-secondary">Cancel</a>
+					</form>
+
+				{% else %}
+
+					<h6 class="mb-4">Add Machines</h6>
+					<form action="/renters" method="POST">
+						<div class="mb-3">
+							<label for="Fname" class="form-label">Machine_name</label>
+							<input type="text" class="form-control" name="Fname" id="FnameId"
+								aria-describedby="emailHelp">
+						</div>
+
+						<div class="mb-3">
+							<label for="Lname" class="form-label">Description </label>
+							<input type="text" class="form-control" name="Lname" id="LnameId"
+								aria-describedby="emailHelp">
+						</div>
+						<div class="mb-3">
+							<label for="phonenumber" class="form-label">price</label>
+							<input type="phone" class="form-control" name="phonenumber" id="phonenumberId">
+						</div>
+						
+						<div class="mb-3">
+							<label for="city" class="form-label">City</label>
+							<input type="text" class="form-control" name="city" id="cityId">
+						</div>
+						<div class="mb-3">
+							<label for="state" class="form-label">State</label>
+							<input type="text" class="form-control" name="state" id="stateId">
+						</div>
+						<div class="mb-3">
+							<label for="lastName" class="form-label">Profile Image</label>
+							<input type="file" class="form-control" name="profile_image" id="profileImageId"
+								aria-describedby="profileImage">
+						</div> 
+
+						<div class="mb-3 form-check">
+							<input type="checkbox" class="form-check-input" name="is_active" id="exampleCheck1">
+							<label class="form-check-label" for="exampleCheck1">Is Active</label>
+						</div>
+						<button type="submit" class="btn btn-primary">Create</button>
+					</form>
+
+				{% endif %}
+			</div>
+		</div>
+     
+		<div class="col-sm-12 col-xl-8">
+			
+			<div class="bg-light rounded h-100 p-4 float-right">
+				<div class="d-grid gap-1 col-4 mx-auto">
+                	{# <button class="btn btn-primary" type="button">Button</button> #}
+                	
+                </div>
+				<h6 class="mb-4">List</h6>                                                         
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Machine_name</th>
+											<th scope="col">Description</th>
+                                            <th scope="col">Price</th>
+											{# <th scope="col">Email</th>
+											<th scope="col">Designation</th> #}
+											<th scope="col">City</th>
+                                            <th scope="col">State</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
+											
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+										{% for tech in renters %}
+                                        <tr>
+                                            <th scope="row">{{ loop.index }}</th>
+											
+                                            <td>{{ tech.Fname}}</td>
+											<td>{{ tech.Lname}}</td>
+                                            <td>{{ tech.phonenumber }}</td>
+											{# <td>{{ tech.email }}</td>
+											<td>{{ tech.designation}}</td> #}
+											<td>{{ tech.city }}</td>
+											<td>{{ tech.state}}</td>
+											
+                                            <td>
+												{% if tech.is_active == 1 %}
+													<span class="badge bg-success">Enabled</span>
+												{% else %}
+													<span class="badge bg-secondary">Disabled</span>
+												{% endif %}
+											</td>
+											<td>
+												<a href="?edit={{tech.id}}&is_edit=true" class="btn btn-primary btn-sm">Edit</a>
+												<button class="btn btn-danger btn-sm deleteButtonId" data-semid='{{tech.id}}'>Delete</button>
+											</td>
+                                        </tr>
+
+										{% endfor %}
+
+                                    </tbody>
+                                </table>
+                        	</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+{% import 'components/delete-modal.njk' as modal %}
+{{ modal.delete_modal() }}
+
+{% endblock %} 
+
+{% block scripts %}
+<script>
+	$(document).ready(function(){
+		$('.deleteButtonId').click(function(){
+			var myModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+			const id = $(this).data('semid');
+			myModal.show();
+			$('#deleteItemUrl').attr('href', `/delete-renter/${id}`);
+		})
+	});
+</script>
+{% endblock %}

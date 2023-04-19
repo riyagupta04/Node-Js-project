@@ -1,0 +1,45 @@
+{% extends 'layouts/main-layout.njk' %}
+
+{% block title %}
+	Complains
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid pt-4 px-4">
+	<div class="row g-4">
+		{# <div class="col-sm-16 col-xl-6"> #}
+			<div class="bg-light rounded h-100 p-4">
+				<h6 class="mb-6">Add Your Complains</h6>
+					<form action="/complain" method="POST">
+						<div class="mb-3">
+							<label for="name" class="form-label">name</label>
+							<input type="text" class="form-control" name="name" id="name"
+								aria-describedby="emailHelp">
+						</div>
+
+						<div class="mb-3">
+							<label for="email" class="form-label">email </label>
+							<input type="text" class="form-control" name="email" id="email"
+								aria-describedby="emailHelp">
+						</div>
+						<div class="mb-3">
+							<label for="complain" class="form-label">Complain</label>
+							    <textarea rows="6" cols="85" name="complain" id="complain" placeholder="" required=""></textarea>
+                            <input type="hidden" name="_subject" id="email-subject" value="Complaint Form Submission">
+						</div>
+
+					
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+
+				
+                                   
+			</div>
+		
+	</div>
+</div>
+
+
+
+
+{% endblock %}
